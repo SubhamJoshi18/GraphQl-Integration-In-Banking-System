@@ -1,0 +1,52 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type User {
+  id: Int!
+  username: String!
+  displayName: String
+  password: String!
+}
+
+type RegisterResponse {
+  message: String!
+}
+
+type LoginResposne {
+  access_token: String!
+  user: User!
+}
+
+type Query {
+  getAllUser: [User!]
+  getUserById(id: Int!): User
+  getUserByName(name: String!): User
+}
+
+type Mutation {
+  createUser(CreateUserInput: CreateUserInput!): User
+  deleteUser(DeleteUserInput: DeleteUserInput!): Boolean!
+  register(RegisterInput: RegisterInput!): RegisterResponse!
+  login(LoginInput: LoginInput!): LoginResposne
+}
+
+input CreateUserInput {
+  username: String!
+  displayName: String
+}
+
+input DeleteUserInput {
+  id: Int!
+}
+
+input RegisterInput {
+  username: String!
+  displayName: String!
+  password: String!
+}
+
+input LoginInput {
+  username: String!
+  password: String!
+}
