@@ -89,4 +89,10 @@ export class AuthService {
     }
     return null;
   }
+
+  async validateToken(token: string) {
+    return this.jwtService.verify(token, {
+      secret: 'hide-me',
+    });
+  }
 }

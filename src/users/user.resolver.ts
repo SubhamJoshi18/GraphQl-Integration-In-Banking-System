@@ -1,23 +1,32 @@
 import { Inject, ParseIntPipe, UseGuards } from '@nestjs/common';
-import { Args, Int, Mutation, Query } from '@nestjs/graphql';
+import {
+  Args,
+  Context,
+  GqlExecutionContext,
+  Int,
+  Mutation,
+  Query,
+} from '@nestjs/graphql';
 import { Resolver } from '@nestjs/graphql';
 import { User } from 'src/graphql/models/User';
 import { UserService } from './user.service';
 import { CreateUserInput } from 'src/graphql/utils/CreateUserInput';
 import { DeleteUserInput } from 'src/graphql/utils/DeleteUserInput';
-import { JwtAuthGuard } from 'src/auth/jwt.guard';
+import { AuthGuard } from 'src/auth/jwt.guard';
 
 @Resolver((of) => User)
 export class UserResolver {
   constructor(@Inject(UserService) private readonly userService: UserService) {}
 
+  @UseGuards(AuthGuard)
   @Query((returns) => [User], { nullable: true })
-  async getAllUser(): Promise<User[] | User> {
+  async getAllUser(@Context() context): Promise<User[] | User> {
+    const user = context.req.user;
+    console.log(user);
     return this.userService.getAllUser();
   }
 
   @Query((returns) => User, { nullable: true })
-  @UseGuards(JwtAuthGuard)
   async getUserById(@Args('id', { type: () => Int }) id: number) {
     return this.userService.getUserById(id);
   }

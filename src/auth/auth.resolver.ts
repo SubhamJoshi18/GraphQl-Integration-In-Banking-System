@@ -18,7 +18,6 @@ export class AuthResolver {
   }
 
   @Mutation((returns) => LoginResposne, { nullable: true })
-  @UseGuards(GqlAuthGuard)
   async login(@Args('LoginInput') { username, password }: LoginInput) {
     return await this.authService.validateUser(username, password);
   }

@@ -18,6 +18,10 @@ type LoginResposne {
   user: User!
 }
 
+type CreateUserSettingResponse {
+  message: String!
+}
+
 type Query {
   getAllUser: [User!]
   getUserById(id: Int!): User
@@ -27,6 +31,8 @@ type Query {
 type Mutation {
   createUser(CreateUserInput: CreateUserInput!): User
   deleteUser(DeleteUserInput: DeleteUserInput!): Boolean!
+  createUserSetting(CreateUserSetting: CreateUserSettingInput!): CreateUserSettingResponse!
+  deactivateAccount(DeactivateAccountInput: DeactivateAccountInput!): String
   register(RegisterInput: RegisterInput!): RegisterResponse!
   login(LoginInput: LoginInput!): LoginResposne
 }
@@ -38,6 +44,15 @@ input CreateUserInput {
 
 input DeleteUserInput {
   id: Int!
+}
+
+input CreateUserSettingInput {
+  receiveNotifications: Boolean!
+  receiveEmails: Boolean!
+}
+
+input DeactivateAccountInput {
+  deactivate_status: Boolean!
 }
 
 input RegisterInput {
